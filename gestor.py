@@ -1,4 +1,5 @@
 # gestor.py
+import csv
 from libro import Libro
 
 class GestorInventario:
@@ -31,6 +32,7 @@ class GestorInventario:
                 return
         print("Libro no encontrado.")
 
+
     def prestar_libro(self, usuario, isbn):
         for libro in self.libros:
             if libro.isbn == isbn:
@@ -47,3 +49,24 @@ class GestorInventario:
     def devolver_libro(self, usuario, isbn):
         # Lógica inversa a prestar (intenta implementarla tú basándote en la de arriba)
         pass
+
+    def guardar_libros(self, archivo="inventario.csv"):
+        with open(archivo, mode='w', newline='') as file:
+            writer = csv.writer(file)
+            for libro in self.libros:
+                writer.writerow([libro.titulo, libro.autor, libro.isbn, libro.anio, libro.estado])
+        print("Datos guardados.")
+
+    def cargar_libros(self, archivo="inventario.csv"):
+        try:
+            with open(archivo, mode='r') as file:
+                reader = csv.reader(file)
+                self.libros = []
+                for row in reader:
+                    if row:
+                        l = Libro(row[0], row[1], row[2], row[3])
+                        l.estado = row[4]
+                        self.libros.append(l)
+            print("Datos cargados.")
+        except FileNotFoundError:
+            print("No hay archivo previo.")
