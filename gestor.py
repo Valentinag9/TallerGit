@@ -32,6 +32,24 @@ class GestorInventario:
                 return
         print("Libro no encontrado.")
 
+
+    def prestar_libro(self, usuario, isbn):
+        for libro in self.libros:
+            if libro.isbn == isbn:
+                if libro.estado == "disponible":
+                    libro.estado = "prestado"
+                    usuario.libros_prestados.append(libro)
+                    print(f"Libro '{libro.titulo}' prestado a {usuario.nombre}")
+                    return
+                else:
+                    print("El libro ya está prestado.")
+                    return
+        print("Libro no encontrado.")
+
+    def devolver_libro(self, usuario, isbn):
+        # Lógica inversa a prestar (intenta implementarla tú basándote en la de arriba)
+        pass
+
     def guardar_libros(self, archivo="inventario.csv"):
         with open(archivo, mode='w', newline='') as file:
             writer = csv.writer(file)
