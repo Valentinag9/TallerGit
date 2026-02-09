@@ -4,7 +4,7 @@ from libro import Libro
 
 class GestorInventario:
 
-    def _init_(self):
+    def __init__(self):
 
         self.libros = []
 
